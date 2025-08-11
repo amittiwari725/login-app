@@ -1,0 +1,62 @@
+<div class="auth-wrapper">
+  <div class="gradient-bg"></div>
+  <div class="floating-shape shape-1"></div>
+  <div class="floating-shape shape-2"></div>
+  <div class="card" @fadeSlideIn>
+    <div class="brand">
+      <div class="logo">✨</div>
+      <div class="title">Create your account</div>
+      <div class="subtitle">It takes less than a minute</div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field" [class.error]="name?.invalid && (name?.dirty || name?.touched)">
+        <label for="name">Full name</label>
+        <input id="name" type="text" placeholder="Ada Lovelace" formControlName="name" />
+        <div class="hint" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+          <span *ngIf="name?.errors?.['required']">Name is required.</span>
+          <span *ngIf="name?.errors?.['minlength']">At least 2 characters.</span>
+        </div>
+      </div>
+
+      <div class="field" [class.error]="email?.invalid && (email?.dirty || email?.touched)">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" formControlName="email" />
+        <div class="hint" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          <span *ngIf="email?.errors?.['required']">Email is required.</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email.</span>
+        </div>
+      </div>
+
+      <div class="field" [class.error]="password?.invalid && (password?.dirty || password?.touched)">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="••••••••" formControlName="password" />
+        <div class="hint" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+          <span *ngIf="password?.errors?.['required']">Password is required.</span>
+          <span *ngIf="password?.errors?.['minlength']">At least 6 characters.</span>
+        </div>
+      </div>
+
+      <div class="field" [class.error]="(confirmPassword?.dirty || confirmPassword?.touched) && (confirmPassword?.invalid || mismatch)">
+        <label for="confirmPassword">Confirm password</label>
+        <input id="confirmPassword" type="password" placeholder="••••••••" formControlName="confirmPassword" />
+        <div class="hint" *ngIf="(confirmPassword?.dirty || confirmPassword?.touched) && (confirmPassword?.invalid || mismatch)">
+          <span *ngIf="confirmPassword?.errors?.['required']">Confirmation is required.</span>
+          <span *ngIf="mismatch">Passwords do not match.</span>
+        </div>
+      </div>
+
+      <button class="cta" type="submit" [disabled]="isSubmitting">
+        <span class="btn-text" *ngIf="!isSubmitting">Create account</span>
+        <span class="loader" *ngIf="isSubmitting"></span>
+      </button>
+
+      <div class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <div class="switch">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </div>
+    </form>
+  </div>
+</div>
